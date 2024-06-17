@@ -55,7 +55,7 @@ public class GameEngine extends GameCore
     
     
     /**
-     * Closes any resurces used by the GameManager.
+     * Closes any resources used by the GameManager.
      */
     public void stop() {
         super.stop();
@@ -66,15 +66,15 @@ public class GameEngine extends GameCore
     private void initInput() {
         moveLeft = new GameAction("moveLeft");
         moveRight = new GameAction("moveRight");
-        jump = new GameAction("jump", GameAction.DETECT_INITAL_PRESS_ONLY);
-        exit = new GameAction("exit",GameAction.DETECT_INITAL_PRESS_ONLY);
+        jump = new GameAction("jump", GameAction.DETECT_INITIAL_PRESS_ONLY);
+        exit = new GameAction("exit",GameAction.DETECT_INITIAL_PRESS_ONLY);
         
         inputManager = new InputManager(screen.getFullScreenWindow());
         inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
         
-        inputManager.mapToKey(moveLeft, KeyEvent.VK_LEFT);
-        inputManager.mapToKey(moveRight, KeyEvent.VK_RIGHT);
-        inputManager.mapToKey(jump, KeyEvent.VK_SPACE);
+        inputManager.mapToKey(moveLeft, KeyEvent.VK_A);
+        inputManager.mapToKey(moveRight, KeyEvent.VK_D);
+        inputManager.mapToKey(jump, KeyEvent.VK_RIGHT);
         inputManager.mapToKey(exit, KeyEvent.VK_ESCAPE);
     }
     
@@ -205,7 +205,7 @@ public class GameEngine extends GameCore
     public Sprite getSpriteCollision(Sprite sprite) {
         
         // run through the list of Sprites
-        Iterator i = map.getSprites();
+        Iterator<Sprite> i = map.getSprites();
         while (i.hasNext()) {
             Sprite otherSprite = (Sprite)i.next();
             if (isCollision(sprite, otherSprite)) {
@@ -241,7 +241,7 @@ public class GameEngine extends GameCore
         player.update(elapsedTime);
         
         // update other sprites
-        Iterator i = map.getSprites();
+        Iterator<Sprite> i = map.getSprites();
         while (i.hasNext()) {
             Sprite sprite = (Sprite)i.next();
             if (sprite instanceof Creature) {
@@ -362,7 +362,7 @@ public class GameEngine extends GameCore
     
     
     /**
-     * Gives the player the speicifed power up and removes it
+     * Gives the player the specified power up and removes it
      * from the map.
      */
     public void acquirePowerUp(PowerUp powerUp) {

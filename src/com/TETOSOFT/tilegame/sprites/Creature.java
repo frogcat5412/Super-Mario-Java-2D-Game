@@ -43,7 +43,7 @@ public abstract class Creature extends Sprite {
 
     public Object clone() {
         // use reflection to create the correct subclass
-        Constructor constructor = getClass().getConstructors()[0];
+        Constructor<?> constructor = getClass().getConstructors()[0];
         try {
             return constructor.newInstance(new Object[] {
                 (Animation)left.clone(),
@@ -139,7 +139,7 @@ public abstract class Creature extends Sprite {
 
 
     /**
-        Updates the animaton for this creature.
+        Updates the animation for this creature.
     */
     public void update(long elapsedTime) {
         // select the correct Animation

@@ -14,7 +14,7 @@ public abstract class PowerUp extends Sprite {
 
     public Object clone() {
         // use reflection to create the correct subclass
-        Constructor constructor = getClass().getConstructors()[0];
+        Constructor<?> constructor = getClass().getConstructors()[0];
         try {
             return constructor.newInstance(
                 new Object[] {(Animation)anim.clone()});

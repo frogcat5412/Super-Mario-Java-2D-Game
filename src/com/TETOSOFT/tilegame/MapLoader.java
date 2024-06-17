@@ -28,7 +28,7 @@ import com.TETOSOFT.tilegame.sprites.PowerUp;
 */
 public class MapLoader 
 {
-    private ArrayList tiles;
+    private ArrayList<Image> tiles;
     public int currentMap;
     private GraphicsConfiguration gc;
 
@@ -142,7 +142,7 @@ public class MapLoader
     private TileMap loadMap(String filename)
         throws IOException
     {
-        ArrayList lines = new ArrayList();
+        ArrayList<String> lines = new ArrayList<>();
         int width = 0;
         int height = 0;
 
@@ -240,7 +240,7 @@ public class MapLoader
     {
         // keep looking for tile A,B,C, etc. this makes it
         // easy to drop new tiles in the images/ directory
-        tiles = new ArrayList();
+        tiles = new ArrayList<>();
         char ch = 'A';
         
         while (true) 

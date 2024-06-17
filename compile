@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+cd src
+javac com/TETOSOFT/tilegame/GameEngine.java -d ../build/

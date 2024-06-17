@@ -8,7 +8,7 @@ public class GameAction
     public static final int NORMAL = 0;
 
    
-    public static final int DETECT_INITAL_PRESS_ONLY = 1;
+    public static final int DETECT_INITIAL_PRESS_ONLY = 1;
 
     private static final int STATE_RELEASED = 0;
     private static final int STATE_PRESSED = 1;
@@ -94,7 +94,7 @@ public class GameAction
             {
                 amount = 0;
             }
-            else if (behavior == DETECT_INITAL_PRESS_ONLY) 
+            else if (behavior == DETECT_INITIAL_PRESS_ONLY) 
             {
                 state = STATE_WAITING_FOR_RELEASE;
                 amount = 0;

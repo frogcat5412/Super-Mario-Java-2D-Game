@@ -56,7 +56,7 @@ public class TileMapDrawer
     */
     public static int tilesToPixels(int numTiles) {
         // no real reason to use shifting here.
-        // it's slighty faster, but doesn't add up to much
+        // it's slightly faster, but doesn't add up to much
         // on modern processors.
         return numTiles << TILE_SIZE_BITS;
 
@@ -135,7 +135,7 @@ public class TileMapDrawer
             null);
 
         // draw sprites
-        Iterator i = map.getSprites();
+        Iterator<Sprite> i = map.getSprites();
         while (i.hasNext()) {
             Sprite sprite = (Sprite)i.next();
             int x = Math.round(sprite.getX()) + offsetX;

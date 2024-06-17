@@ -1,23 +1,30 @@
 package com.TETOSOFT.input;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
+import java.awt.AWTException;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
+
 import javax.swing.SwingUtilities;
 
-
 public class InputManager implements KeyListener, MouseListener,
-    MouseMotionListener, MouseWheelListener
-{
-    
-    public static final Cursor INVISIBLE_CURSOR =
-        Toolkit.getDefaultToolkit().createCustomCursor(
+        MouseMotionListener, MouseWheelListener {
+
+    public static final Cursor INVISIBLE_CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(
             Toolkit.getDefaultToolkit().getImage(""),
-            new Point(0,0),
+            new Point(0, 0),
             "invisible");
 
-    
     public static final int MOUSE_MOVE_LEFT = 0;
     public static final int MOUSE_MOVE_RIGHT = 1;
     public static final int MOUSE_MOVE_UP = 2;
@@ -32,10 +39,8 @@ public class InputManager implements KeyListener, MouseListener,
 
     private static final int NUM_KEY_CODES = 600;
 
-    private GameAction[] keyActions =
-        new GameAction[NUM_KEY_CODES];
-    private GameAction[] mouseActions =
-        new GameAction[NUM_MOUSE_CODES];
+    private GameAction[] keyActions = new GameAction[NUM_KEY_CODES];
+    private GameAction[] mouseActions = new GameAction[NUM_MOUSE_CODES];
 
     private Point mouseLocation;
     private Point centerLocation;
@@ -43,7 +48,6 @@ public class InputManager implements KeyListener, MouseListener,
     private Robot robot;
     private boolean isRecentering;
 
-  
     public InputManager(Component comp) {
         this.comp = comp;
         mouseLocation = new Point();
@@ -57,15 +61,11 @@ public class InputManager implements KeyListener, MouseListener,
         comp.setFocusTraversalKeysEnabled(false);
     }
 
-
-    public void setCursor(Cursor cursor) 
-    {
+    public void setCursor(Cursor cursor) {
         comp.setCursor(cursor);
     }
 
-
-    public void setRelativeMouseMode(boolean mode) 
-    {
+    public void setRelativeMouseMode(boolean mode) {
         if (mode == isRelativeMouseMode()) {
             return;
         }
@@ -74,44 +74,36 @@ public class InputManager implements KeyListener, MouseListener,
             try {
                 robot = new Robot();
                 recenterMouse();
-            }
-            catch (AWTException ex) {
-                
+            } catch (AWTException ex) {
+
                 robot = null;
             }
-        }
-        else {
+        } else {
             robot = null;
         }
     }
-
 
     public boolean isRelativeMouseMode() {
         return (robot != null);
     }
 
-
     public void mapToKey(GameAction gameAction, int keyCode) {
         keyActions[keyCode] = gameAction;
     }
 
-
     public void mapToMouse(GameAction gameAction,
-        int mouseCode)
-    {
+            int mouseCode) {
         mouseActions[mouseCode] = gameAction;
     }
 
-
-    public void clearMap(GameAction gameAction) 
-    {
-        for (int i=0; i<keyActions.length; i++) {
+    public void clearMap(GameAction gameAction) {
+        for (int i = 0; i < keyActions.length; i++) {
             if (keyActions[i] == gameAction) {
                 keyActions[i] = null;
             }
         }
 
-        for (int i=0; i<mouseActions.length; i++) {
+        for (int i = 0; i < mouseActions.length; i++) {
             if (mouseActions[i] == gameAction) {
                 mouseActions[i] = null;
             }
@@ -120,18 +112,16 @@ public class InputManager implements KeyListener, MouseListener,
         gameAction.reset();
     }
 
+    public ArrayList<String> getMaps(GameAction gameCode) {
+        ArrayList<String> list = new ArrayList<>();
 
-   
-    public List getMaps(GameAction gameCode) {
-        ArrayList list = new ArrayList();
-
-        for (int i=0; i<keyActions.length; i++) {
+        for (int i = 0; i < keyActions.length; i++) {
             if (keyActions[i] == gameCode) {
                 list.add(getKeyName(i));
             }
         }
 
-        for (int i=0; i<mouseActions.length; i++) {
+        for (int i = 0; i < mouseActions.length; i++) {
             if (mouseActions[i] == gameCode) {
                 list.add(getMouseName(i));
             }
@@ -139,83 +129,79 @@ public class InputManager implements KeyListener, MouseListener,
         return list;
     }
 
-
-    
     public void resetAllGameActions() {
-        for (int i=0; i<keyActions.length; i++) {
+        for (int i = 0; i < keyActions.length; i++) {
             if (keyActions[i] != null) {
                 keyActions[i].reset();
             }
         }
 
-        for (int i=0; i<mouseActions.length; i++) {
+        for (int i = 0; i < mouseActions.length; i++) {
             if (mouseActions[i] != null) {
                 mouseActions[i].reset();
             }
         }
     }
 
-
-    
     public static String getKeyName(int keyCode) {
         return KeyEvent.getKeyText(keyCode);
     }
 
-
-   
     public static String getMouseName(int mouseCode) {
         switch (mouseCode) {
-            case MOUSE_MOVE_LEFT: return "Mouse Left";
-            case MOUSE_MOVE_RIGHT: return "Mouse Right";
-            case MOUSE_MOVE_UP: return "Mouse Up";
-            case MOUSE_MOVE_DOWN: return "Mouse Down";
-            case MOUSE_WHEEL_UP: return "Mouse Wheel Up";
-            case MOUSE_WHEEL_DOWN: return "Mouse Wheel Down";
-            case MOUSE_BUTTON_1: return "Mouse Button 1";
-            case MOUSE_BUTTON_2: return "Mouse Button 2";
-            case MOUSE_BUTTON_3: return "Mouse Button 3";
-            default: return "Unknown mouse code " + mouseCode;
+            case MOUSE_MOVE_LEFT:
+                return "Mouse Left";
+            case MOUSE_MOVE_RIGHT:
+                return "Mouse Right";
+            case MOUSE_MOVE_UP:
+                return "Mouse Up";
+            case MOUSE_MOVE_DOWN:
+                return "Mouse Down";
+            case MOUSE_WHEEL_UP:
+                return "Mouse Wheel Up";
+            case MOUSE_WHEEL_DOWN:
+                return "Mouse Wheel Down";
+            case MOUSE_BUTTON_1:
+                return "Mouse Button 1";
+            case MOUSE_BUTTON_2:
+                return "Mouse Button 2";
+            case MOUSE_BUTTON_3:
+                return "Mouse Button 3";
+            default:
+                return "Unknown mouse code " + mouseCode;
         }
     }
 
-
-   
     public int getMouseX() {
         return mouseLocation.x;
     }
-
 
     public int getMouseY() {
         return mouseLocation.y;
     }
 
-
-   
     private synchronized void recenterMouse() {
         if (robot != null && comp.isShowing()) {
             centerLocation.x = comp.getWidth() / 2;
             centerLocation.y = comp.getHeight() / 2;
             SwingUtilities.convertPointToScreen(centerLocation,
-                comp);
+                    comp);
             isRecentering = true;
             robot.mouseMove(centerLocation.x, centerLocation.y);
         }
     }
 
-
     private GameAction getKeyAction(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode < keyActions.length) {
             return keyActions[keyCode];
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-  
     public static int getMouseButtonCode(MouseEvent e) {
-         switch (e.getButton()) {
+        switch (e.getButton()) {
             case MouseEvent.BUTTON1:
                 return MOUSE_BUTTON_1;
             case MouseEvent.BUTTON2:
@@ -227,17 +213,14 @@ public class InputManager implements KeyListener, MouseListener,
         }
     }
 
-
     private GameAction getMouseButtonAction(MouseEvent e) {
         int mouseCode = getMouseButtonCode(e);
         if (mouseCode != -1) {
-             return mouseActions[mouseCode];
-        }
-        else {
-             return null;
+            return mouseActions[mouseCode];
+        } else {
+            return null;
         }
     }
-
 
     // from the KeyListener interface
     public void keyPressed(KeyEvent e) {
@@ -249,7 +232,6 @@ public class InputManager implements KeyListener, MouseListener,
         e.consume();
     }
 
-
     // from the KeyListener interface
     public void keyReleased(KeyEvent e) {
         GameAction gameAction = getKeyAction(e);
@@ -260,13 +242,11 @@ public class InputManager implements KeyListener, MouseListener,
         e.consume();
     }
 
-
     // from the KeyListener interface
     public void keyTyped(KeyEvent e) {
         // make sure the key isn't processed for anything else
         e.consume();
     }
-
 
     // from the MouseListener interface
     public void mousePressed(MouseEvent e) {
@@ -276,7 +256,6 @@ public class InputManager implements KeyListener, MouseListener,
         }
     }
 
-
     // from the MouseListener interface
     public void mouseReleased(MouseEvent e) {
         GameAction gameAction = getMouseButtonAction(e);
@@ -285,41 +264,34 @@ public class InputManager implements KeyListener, MouseListener,
         }
     }
 
-
     // from the MouseListener interface
     public void mouseClicked(MouseEvent e) {
         // do nothing
     }
-
 
     // from the MouseListener interface
     public void mouseEntered(MouseEvent e) {
         mouseMoved(e);
     }
 
-
     // from the MouseListener interface
     public void mouseExited(MouseEvent e) {
         mouseMoved(e);
     }
-
 
     // from the MouseMotionListener interface
     public void mouseDragged(MouseEvent e) {
         mouseMoved(e);
     }
 
-
     // from the MouseMotionListener interface
     public synchronized void mouseMoved(MouseEvent e) {
         // this event is from re-centering the mouse - ignore it
         if (isRecentering &&
-            centerLocation.x == e.getX() &&
-            centerLocation.y == e.getY())
-        {
+                centerLocation.x == e.getX() &&
+                centerLocation.y == e.getY()) {
             isRecentering = false;
-        }
-        else {
+        } else {
             int dx = e.getX() - mouseLocation.x;
             int dy = e.getY() - mouseLocation.y;
             mouseHelper(MOUSE_MOVE_LEFT, MOUSE_MOVE_RIGHT, dx);
@@ -335,21 +307,18 @@ public class InputManager implements KeyListener, MouseListener,
 
     }
 
-
     // from the MouseWheelListener interface
     public void mouseWheelMoved(MouseWheelEvent e) {
         mouseHelper(MOUSE_WHEEL_UP, MOUSE_WHEEL_DOWN,
-            e.getWheelRotation());
+                e.getWheelRotation());
     }
 
     private void mouseHelper(int codeNeg, int codePos,
-        int amount)
-    {
+            int amount) {
         GameAction gameAction;
         if (amount < 0) {
             gameAction = mouseActions[codeNeg];
-        }
-        else {
+        } else {
             gameAction = mouseActions[codePos];
         }
         if (gameAction != null) {
