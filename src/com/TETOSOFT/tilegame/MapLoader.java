@@ -1,13 +1,24 @@
 package com.TETOSOFT.tilegame;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.geom.AffineTransform;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-import com.TETOSOFT.graphics.*;
-import com.TETOSOFT.tilegame.sprites.*;
+import com.TETOSOFT.graphics.Animation;
+import com.TETOSOFT.graphics.Sprite;
+import com.TETOSOFT.tilegame.sprites.Fly;
+import com.TETOSOFT.tilegame.sprites.Grub;
+import com.TETOSOFT.tilegame.sprites.Player;
+import com.TETOSOFT.tilegame.sprites.PowerUp;
 
 
 /**
@@ -74,7 +85,7 @@ public class MapLoader
             (x-1) * image.getWidth(null) / 2,
             (y-1) * image.getHeight(null) / 2);
 
-        // create a transparent (not translucent) image
+        // create a transparent image
         Image newImage = gc.createCompatibleImage(
             image.getWidth(null),
             image.getHeight(null),
@@ -253,7 +264,7 @@ public class MapLoader
 
         // load left-facing images
         images[0] = new Image[] {
-            loadImage("player.png"),         
+            loadImage("player.png"),
             loadImage("fly1.png"),
             loadImage("fly2.png"),
             loadImage("fly3.png"),

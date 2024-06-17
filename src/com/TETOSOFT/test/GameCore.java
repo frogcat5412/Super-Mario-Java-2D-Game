@@ -145,3 +145,4 @@ public abstract class GameCore {
     */
     public abstract void draw(Graphics2D g);
 }
+ 
